@@ -14,10 +14,7 @@ class UberServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->handleRoutes();
-
-        // $this->handleMigrations();
-
-        $this->loadMigrationsFrom(__DIR__.'/Packages/Uber/resources/database/migrations');
+        $this->handleMigrations();
     }
 
     /**
@@ -35,8 +32,10 @@ class UberServiceProvider extends ServiceProvider
         include __DIR__.'/routes.php';
     }
 
-    // private function handleMigrations() {
-
-    //     $this->publishes([__DIR__ . '/migrations' => base_path('resources/database/migrations')]);
-    // }
+    public function handleMigrations()
+    {
+        $this->publishes([
+           __DIR__ . '/../../resources/database/migrations' => $this->app->databasePath() . '/migrations'
+       ], 'migrations');
+    }
 }
