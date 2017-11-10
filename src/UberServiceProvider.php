@@ -14,10 +14,6 @@ class UberServiceProvider extends ServiceProvider
     public function boot()
     {
         include __DIR__.'/routes.php';
-
-         $this->publishes([
-            __DIR__.'/../vendor/' => config_path('Uber'),
-        ], 'config');
     }
 
     /**
