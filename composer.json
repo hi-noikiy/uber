@@ -1,0 +1,17 @@
+{
+    "name": "uber/package",
+    "description": "this is testing package",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "laravel/framework": "5.2.*"
+    },
+     "autoload": {
+        "psr-4": {
+            "Package\\Uber\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
