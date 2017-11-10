@@ -14,6 +14,8 @@ class UberServiceProvider extends ServiceProvider
     public function boot()
     {
         include __DIR__.'/routes.php';
+
+        $this->loadMigrationsFrom(__DIR__.'Packages\Uber\resources\database\migrations');
     }
 
     /**
