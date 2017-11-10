@@ -13,9 +13,9 @@ class UberServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        include __DIR__.'/routes.php';
+        $this->handleRoutes();
 
-        $this->loadMigrationsFrom(__DIR__.'Packages\Uber\resources\database\migrations');
+        $this->loadMigrationsFrom(__DIR__.'Packages/Uber/../migrations');
     }
 
     /**
@@ -26,5 +26,10 @@ class UberServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->make('Packages\Uber\UberController');
+    }
+
+    private function handleRoutes() {
+
+        include __DIR__.'/routes.php';
     }
 }
