@@ -1,4 +1,4 @@
 <?php
 
-Route::get('uber', 
+Route::get('uber/', 
   'packages\uber\UberController@index');
