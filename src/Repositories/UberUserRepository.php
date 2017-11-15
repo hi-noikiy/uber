@@ -49,5 +49,5 @@ class UberUserRepository
         $model->save();
 
         return $model;
-    }
+    } 
 }

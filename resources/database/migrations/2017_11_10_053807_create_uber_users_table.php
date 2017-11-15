@@ -15,6 +15,7 @@ class CreateUberUsersTable extends Migration
         Schema::create('uber_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('email');
             $table->string('address');
             $table->timestamps();
         });

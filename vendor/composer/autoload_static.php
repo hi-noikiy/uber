@@ -75,6 +75,10 @@ class ComposerStaticInit159125abd83cc9b433a951a979cdf937
             'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
         ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -210,6 +214,10 @@ class ComposerStaticInit159125abd83cc9b433a951a979cdf937
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -241,6 +249,8 @@ class ComposerStaticInit159125abd83cc9b433a951a979cdf937
     );
 
     public static $classMap = array (
+        'AddMetaFieldForUberUserTable' => __DIR__ . '/../..' . '/resources/database/migrations/2017_11_14_101230_add_meta_field_for_uber_user_table.php',
+        'CreateUberUsersTable' => __DIR__ . '/../..' . '/resources/database/migrations/2017_11_10_053807_create_uber_users_table.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     );
 

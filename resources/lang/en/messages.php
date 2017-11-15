@@ -2,7 +2,7 @@
 	
 	return [
 
-		'success'  => "successfully fetched!",
+		'success'  => "successfully fetched pam!",
 		'saved'	=> "Data successfully saved!",
 		'not_saved'	=> "Data not saved!",
 		'updated'	=> "Data successfully updated!",
