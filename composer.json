@@ -1,14 +1,18 @@
 {
-    "name": "uber/package",
+	"name": "uber/package",
     "description": "this is testing package",
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
         "laravel/framework": "5.2.*",
-        "uber/package": "dev-master"
+		"cyvelnet/laravel5-fractal": "^2.2"
     },
      "autoload": {
+         "classmap": [
+            "database"
+        ],
         "psr-4": {
+            "App\\": "app/",
             "Packages\\Uber\\": "src/"
         }
     },
