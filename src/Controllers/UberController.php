@@ -12,7 +12,7 @@ use Packages\Uber\Requests\UberRequest;
 use Packages\Uber\Controllers\ResponseController;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
-// use Fractal;
+use Fractal;
 
 class UberController extends ResponseController
 {
@@ -32,15 +32,9 @@ class UberController extends ResponseController
     {
         $data = Uber::get();
 
-        echo (trans('packages::messages.success').PHP_EOL);
-        
-        echo config('messages.message');
+        $user = Fractal::collection($data, new UberTransformer)->getArray();
 
-        // $user = Fractal::collection($data, new UberTransformer)->getArray();
-
-        return \Response::json([
-            'user' => $data
-        ]);
+        return \Response::json($user);
     }
 
     /**
@@ -126,6 +120,8 @@ class UberController extends ResponseController
                             ]);
 
         $user = $this->service->update($entity);
+
+        // echo config('messages.message');
 
         $message = trans('packages::messages.updated');
 

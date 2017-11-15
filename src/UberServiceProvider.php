@@ -31,10 +31,9 @@ class UberServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->register(\Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class);
+        $this->app->register(\Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class);
 
-        // $this->loadfacades();
-
+        $this->loadfacades();
         $this->handleController();
         $this->handleConfigs();
         
@@ -68,13 +67,12 @@ class UberServiceProvider extends ServiceProvider
     }
 
 
-    // private function loadfacades()
-    // {
-    //     $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+    private function loadfacades()
+    {
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
-    //     // $loader->alias('Fractal', \Cyvelnet\Laravel5Fractal\Facades\Fractal::class);
-    //     $loader->alias('Fractal', '\Cyvelnet\Laravel5Fractal\Facades\Fractal');
+        $loader->alias('Fractal', '\Cyvelnet\Laravel5Fractal\Facades\Fractal');
 
-    //     return true;
-    // }
+        return true;
+    }
 }

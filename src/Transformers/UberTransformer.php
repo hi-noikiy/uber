@@ -2,11 +2,11 @@
 
 namespace Packages\Uber\Transformers;
 
-// use League\Fractal;
-// use League\Fractal\TransformerAbstract;
-// use League\Fractal\Resource\Collection;
-// use League\Fractal\Resource\Item;
-// use Packages\Uber\Uber;
+use League\Fractal;
+use League\Fractal\TransformerAbstract;
+use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
+use Packages\Uber\Models\Uber;
 
 class UberTransformer extends TransformerAbstract
 {
@@ -36,8 +36,9 @@ class UberTransformer extends TransformerAbstract
             'id'            => (int) $uber->id,
             'name'        	=> $uber->name,
             'address'    	=> $uber->address,
-			'created_at'    => $uber->created_at,
-			'updated_at'    => $uber->updated_at
+            'meta'          => $uber->meta
+			// 'created_at'    => $uber->created_at,
+			// 'updated_at'    => $uber->updated_at
         ];
     }
 }
