@@ -9,10 +9,12 @@ use Packages\Uber\Transformers\UberTransformer;
 use Illuminate\Http\Request;
 use Packages\Uber\Services\UberUserService;
 use Packages\Uber\Requests\UberRequest;
+use Packages\Uber\Controllers\ResponseController;
 use Symfony\Component\HttpFoundation\Response;
+use Validator;
 // use Fractal;
 
-class UberController extends Controller
+class UberController extends ResponseController
 {
     protected $service; 
 
@@ -47,8 +49,19 @@ class UberController extends Controller
      * @param  $item: model object.
      * @return json response.
      */
-    public function save(UberRequest $request, UberUserEntity $userEntity)
+    public function save(Request $request, UberUserEntity $userEntity)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'address'    => 'required'
+        ]);
+
+        if($validator->fails()){ 
+            
+            return $this->respondValidationFailed($validator->errors());
+        }
+
         $entity = $userEntity->setName($request->get('name'))
                 ->setEmail($request->get('email'))
                 ->setAddress($request->get('address'))
@@ -89,8 +102,19 @@ class UberController extends Controller
      * @param  $item: model object.
      * @return json response.
      */
-    public function update($id, UberRequest $request, UberUserEntity $userEntity)
+    public function update($id, Request $request, UberUserEntity $userEntity)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'address'    => 'required'
+        ]);
+
+        if($validator->fails()){ 
+            
+            return $this->respondValidationFailed($validator->errors());
+        }
+        
         $entity = $userEntity->setName($request->get('name'))
                             ->setEmail($request->get('email'))
                             ->setAddress($request->get('address'))
