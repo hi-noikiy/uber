@@ -52,9 +52,7 @@ class UberController extends ResponseController
 
             $userData = $data->get();     
         }
-        // $user = Fractal::collection($data, new UberTransformer)->getArray();
 
-        // return \Response::json($user);
         return  \Response::json(
                $this->fractal
                ->setSerializer(new JsonApiSerializer('') , 'User')
@@ -158,16 +156,11 @@ class UberController extends ResponseController
 
         $message = trans('packages::messages.updated');
 
-         return  \Response::json(
-               $this->fractal
-               ->setSerializer(new JsonApiSerializer('') , 'User')
-               ->createData(new item($user, new UberTransformer, 'User'))
-               ->toArray()
-           );
-
-        // return \Response::json([
-        //     'user' => $user,
-        //     'message' => $message
-        // ]);
+        return  \Response::json(
+           $this->fractal
+           ->setSerializer(new JsonApiSerializer('') , 'User')
+           ->createData(new item($user, new UberTransformer, 'User'))
+           ->toArray()
+        );
     }
 }
