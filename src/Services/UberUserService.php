@@ -17,9 +17,9 @@ class UberUserService
 	 * @param  $item: model object.
 	 * @return created model object.
 	 */
-	public function save($data)
+	public function save($data, $request)
 	{
-		return $this->repository->save($data);
+		return $this->repository->save($data, $request);
 	}
 
 	/**
@@ -28,8 +28,8 @@ class UberUserService
 	 * @param  $item: model object.
 	 * @return updated model object.
 	 */
-	public function update($data)
+	public function update($data, $request)
 	{
-		return $this->repository->update($data);
+		return $this->repository->update($data, $request);
 	}
 }

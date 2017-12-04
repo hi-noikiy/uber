@@ -8,6 +8,9 @@ class UberUserEntity
     protected $email;
     protected $address;
     protected $meta;
+    protected $phone;
+    protected $uid;
+    protected $user_id;
 
     /**
      * set id of contract.
@@ -114,6 +117,69 @@ class UberUserEntity
         return $this->meta;
     }
 
+    /**
+     * set phone of user.
+     * 
+     * @param $value: string phone.
+     */
+    public function setPhone($value)
+    {
+        $this->phone = $value;
+        return $this;
+    }
+
+    /**
+     * get phone of user.
+     * 
+     * @return string phone.
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * set uid of user.
+     * 
+     * @param $value: string uid.
+     */
+    public function setUid($value)
+    {
+        $this->uid = $value;
+        return $this;
+    }
+
+    /**
+     * get uid of user.
+     * 
+     * @return string uid.
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+     /**
+     * set user id of user.
+     * 
+     * @param $value: string user id.
+     */
+    public function setUserId($value)
+    {
+        $this->user_id = $value;
+        return $this;
+    }
+
+    /**
+     * get user id of user.
+     * 
+     * @return string user id.
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
     /** 
      * set payload field for saving.
      * 
@@ -125,7 +191,7 @@ class UberUserEntity
             'name'      => $this->getName(),
             'email'     => $this->getEmail(),
             'address'   => $this->getAddress(),
-            'meta'      => $this->getMeta()
+            'meta'      => $this->getMeta(),
         ];
     }
 }

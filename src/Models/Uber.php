@@ -13,4 +13,9 @@ class Uber extends Model
 	protected $casts = [ 
         'meta' => 'array' 
     ]; 
+
+    public function profile() 
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
 }

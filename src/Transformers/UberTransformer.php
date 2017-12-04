@@ -4,9 +4,8 @@ namespace Packages\Uber\Transformers;
 
 use League\Fractal;
 use League\Fractal\TransformerAbstract;
-use League\Fractal\Resource\Collection;
-use League\Fractal\Resource\Item;
 use Packages\Uber\Models\Uber;
+use Packages\Uber\Transformers\ProfileTransformer;
 
 class UberTransformer extends TransformerAbstract
 {
@@ -15,14 +14,18 @@ class UberTransformer extends TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = [];
+    protected $availableIncludes = [
+        
+    ];
 
     /**
      * List of resources to automatically include
      *
      * @var array
      */
-    protected $defaultIncludes = [];
+    protected $defaultIncludes = [
+        'profile'
+    ];
 
     /**
      * Transform object into a generic array
@@ -36,9 +39,19 @@ class UberTransformer extends TransformerAbstract
             'id'            => (int) $uber->id,
             'name'        	=> $uber->name,
             'address'    	=> $uber->address,
-            'meta'          => $uber->meta
-			// 'created_at'    => $uber->created_at,
-			// 'updated_at'    => $uber->updated_at
+            'user_info'     => $uber->meta,
+			'created_at'    => $uber->created_at,
+			'updated_at'    => $uber->updated_at
         ];
+    }
+
+    public function includeProfile($uber)
+    {
+        $profile = $uber->profile;
+
+        if($profile) {
+
+            return $this->item($profile, new ProfileTransformer, 'User Profile');
+        }
     }
 }

@@ -32,9 +32,9 @@ class UberServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(\Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class);
-
         $this->loadfacades();
         $this->handleController();
+        $this->handleFractal();
         $this->handleConfigs();
         
     }
@@ -74,5 +74,17 @@ class UberServiceProvider extends ServiceProvider
         $loader->alias('Fractal', '\Cyvelnet\Laravel5Fractal\Facades\Fractal');
 
         return true;
+    }
+
+    private function handleFractal()
+    {
+        // $this->app->bind('League\Fractal\Manager', function($app) {
+        //     $fractal = new Manager();
+        //     $serializer = new JsonApiSerializer();
+        //     $fractal->setSerializer($serializer);
+
+        //     return $fractal;
+        // });
+        $this->app->bind('\League\Fractal\Serializer\JsonApiSerializer');
     }
 }

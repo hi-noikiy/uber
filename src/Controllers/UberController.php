@@ -8,19 +8,28 @@ use Packages\Uber\Entities\UberUserEntity;
 use Packages\Uber\Transformers\UberTransformer;
 use Illuminate\Http\Request;
 use Packages\Uber\Services\UberUserService;
-use Packages\Uber\Requests\UberRequest;
 use Packages\Uber\Controllers\ResponseController;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
 use Fractal;
+use League\Fractal\Serializer\JsonApiSerializer;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
 
 class UberController extends ResponseController
 {
     protected $service; 
+    protected $response; 
 
-    public function __construct(UberUserService $service)
+    public function __construct(UberUserService $service, Manager $fractal, Request $request)
     {
         $this->service = $service;
+        $this->fractal = $fractal;
+
+        if($request->get('includes')) {
+            $this->fractal->parseIncludes($request->get('includes')); 
+        }
     }
 
     /**
@@ -28,13 +37,30 @@ class UberController extends ResponseController
     *
     * @return json response.
     */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Uber::get();
+        $data = Uber::with('profile')->orderBy('id', 'asc');
+        echo "from package";
 
-        $user = Fractal::collection($data, new UberTransformer)->getArray();
+        if($request->has('limit')) {
 
-        return \Response::json($user);
+            $limit = $request->get('limit');
+
+            $userData = $data->Paginate($limit);
+
+        } else {
+
+            $userData = $data->get();     
+        }
+        // $user = Fractal::collection($data, new UberTransformer)->getArray();
+
+        // return \Response::json($user);
+        return  \Response::json(
+               $this->fractal
+               ->setSerializer(new JsonApiSerializer('') , 'User')
+               ->createData(new Collection($userData, new UberTransformer, 'User'))
+               ->toArray()
+           );
     }
 
     /**
@@ -48,7 +74,9 @@ class UberController extends ResponseController
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
-            'address'    => 'required'
+            'address'    => 'required',
+            'uid'   =>  'required',
+            'phone' =>  'required'
         ]);
 
         if($validator->fails()){ 
@@ -65,14 +93,16 @@ class UberController extends ResponseController
                     'address' => $request->get('address'),
                 ]);
 
-        $user = $this->service->save($entity);
+        $user = $this->service->save($entity, $request);
 
         $message = trans('packages::messages.saved');
 
-        return \Response::json([
-            'user' => $user,
-            'message' => $message
-        ]);
+        return  \Response::json(
+               $this->fractal
+               ->setSerializer(new JsonApiSerializer('') , 'User')
+               ->createData(new item($user, new UberTransformer, 'User'))
+               ->toArray()
+           );
     }
 
     /**
@@ -83,11 +113,14 @@ class UberController extends ResponseController
      */
     public function show($id)
     {
-        $user = Uber::findOrFail($id);
+        $user = Uber::with('profile')->findOrFail($id);
 
-        return \Response::json([
-            'user' => $user,
-        ]);
+        return \Response::json(
+               $this->fractal
+               ->setSerializer(new JsonApiSerializer, 'users')
+               ->createData(new Item($user, new UberTransformer, 'User'))
+               ->toArray()
+           );
     }
 
     /**
@@ -119,15 +152,22 @@ class UberController extends ResponseController
                                 'address' => $request->get('address'),
                             ]);
 
-        $user = $this->service->update($entity);
+        $user = $this->service->update($entity, $request);
 
         // echo config('messages.message');
 
         $message = trans('packages::messages.updated');
 
-        return \Response::json([
-            'user' => $user,
-            'message' => $message
-        ]);
+         return  \Response::json(
+               $this->fractal
+               ->setSerializer(new JsonApiSerializer('') , 'User')
+               ->createData(new item($user, new UberTransformer, 'User'))
+               ->toArray()
+           );
+
+        // return \Response::json([
+        //     'user' => $user,
+        //     'message' => $message
+        // ]);
     }
 }
